@@ -1,9 +1,13 @@
-import './App.css';
+import './styles.scss'
+import logo from './images/jeopardy_logo.png'
 import React from 'react';
-import Category from './Category.js'
+import Clues from './Clues'
+import Score from './Score'
+// import Answer from './Answer'
 
 const maxCategoryID = 28001
-const categoryCount = 2
+const categoryCount = 1
+const stateData = []
 
 /*
 categories: [{
@@ -18,46 +22,53 @@ categories: [{
 class App extends React.Component {
   constructor (props) {
     super(props);
+
     this.state = {
       error: null,
       isLoaded: false,
-      categories: []
+      categories: [],
+      score: 0
     };
   }
-// this.setState({
-//           isLoaded: true,
-//           items: res.results
-//         });
+
   componentDidMount() {
+    if (stateData.length !== 0) {
+      return false
+    }
     const categoryOffset = Math.random() * (maxCategoryID - 1) + 1
     
     fetch(`http://jservice.io/api/categories?count=${categoryCount}&offset=${categoryOffset}`, {
       method: 'GET'
     })
-      .then(categories => categories.json())
+      .then(response => response.json())
       .then(categories => {
         for(let i=0; i < categories.length; i++) {
           fetch(`http://jservice.io/api/category?id=${categories[i].id}`, {
             method: 'GET'
           })
-          .then(category => category.json())
+          .then(response => response.json())
           .then(category => {
             let categoryData = { 
               id: categories[i].id,
-              title: categories[i].title 
+              title: categories[i].title ,
+              clues: []
             }
-            categoryData.clues = category.clues.map(question => {
-              return {
-                question: question.question,
-                answer: question.answer,
-                value: question.value,
-                asked: false
-              }
-            })
 
-            this.setState({
-              isLoaded: true,
-              categories: [...this.state.categories, categoryData]
+            for (let j=0; j < 5; j++) {
+              categoryData.clues.push({
+                question: category.clues[j].question,
+                answer: category.clues[j].answer,
+                value: category.clues[j].value,
+                asked: false
+              })
+            }
+            
+
+            this.setState((state) => {
+              return {
+                isLoaded: true,
+                categories: [...state.categories, categoryData]
+              }
             });
           })
         }
@@ -76,8 +87,7 @@ class App extends React.Component {
   }
 
   render() {
-    const { error, isLoaded, categories } = this.state
-    console.log(categories)
+    const { error, isLoaded, categories, score } = this.state
 
     if (error) {
       return <div>Error: {error.message}</div>
@@ -85,13 +95,20 @@ class App extends React.Component {
       return <div>Loading...</div>
     } else {
       return (
-        <div className="game">
-          <div className="clues-container">
-            {categories.map( category => <Category category={category} /> )}
-          </div>
-          <div className="answer-container">
-            
-          </div>
+        <div className="app">
+          <header className="header">
+            <img className="header__logo" src={logo} alt="Jeopardy!js" />
+          </header>
+          <main>
+            <div className="app">
+              <Clues categories={categories}/>
+              <Score score={score} />
+              {/* <Answer /> */}
+            </div>
+          </main>
+          <footer>
+
+          </footer>
         </div>
       );
     }

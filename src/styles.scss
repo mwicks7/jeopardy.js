@@ -1,0 +1,24 @@
+$blue: #2521c6;
+$blue-dark: #1f1ca6;
+$yellow: #f0c888;
+$border: 2px solid #ffffff;
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+}
+
+@mixin vertical-align {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+@import-normalize;
+@import "./App.scss";
+@import "./Header.scss";
+@import "./Clues.scss";
+@import "./Score.scss";
