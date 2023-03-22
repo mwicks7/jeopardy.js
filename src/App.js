@@ -123,7 +123,7 @@ class App extends React.Component {
       this.state.score + cluePoints :
       this.state.score - cluePoints 
     const answeredClues = [...this.state.answeredClues, clueID]
-    debugger
+
     this.setState(state => {
       return {
         answeredClues: answeredClues,
