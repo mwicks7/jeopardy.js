@@ -20,5 +20,7 @@ body {
 @import-normalize;
 @import "./App.scss";
 @import "./Header.scss";
+@import "./Gameboard.scss";
 @import "./Clues.scss";
-@import "./Score.scss";
+@import "./Question.scss";
+@import "./Scoreboard.scss";

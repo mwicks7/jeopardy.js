@@ -1,27 +1,44 @@
 import React from 'react'
 
-const Category = ({ category }) => {
+const Clue = ({ clue, answeredClues, handleLoadQuestion }) => {
+  const buttonClasses = ["clues__question-value"]
+  if (answeredClues.includes(clue.id)) buttonClasses.push('is--answered')
+
   return (
-    <div className="clues__category">
-      <div className="clues__category-title">
-        {category.title}
-      </div>
-      <ul className="clues__questions">
-        {category.clues.map((clue, i) => 
-          <li className="clues__question" key={"clue" + i + category.id}>
-            <button className="clues__question-value">${clue.value}</button>
-            <div className="clues__question-text">{clue.question}</div>
-          </li>
-        )}
-      </ul>
-    </div>
+    <li className="clues__question">
+      <button 
+        className={buttonClasses.join(' ')}
+        data-id={clue.id}
+        data-question={clue.question}
+        data-answer={clue.answer}
+        data-points={clue.points}
+        onClick={handleLoadQuestion}
+      >
+        ${clue.points}
+      </button>
+      <div className="clues__question-text">{clue.question}</div>
+    </li>
   )
 }
 
-const Clues = ({ categories }) => {
+const Clues = ({ category, clues, answeredClues, handleLoadQuestion }) => {
   return (
     <div className="clues">
-      {categories.map( category => <Category category={category} key={'category' + category.id}/> )}
+      <div className="clues__category">
+        <div className="clues__category-title">
+          {category.title}
+        </div>
+        <ul className="clues__questions">
+          {clues.map((clue, i) => 
+            <Clue 
+              clue={clue}
+              answeredClues={answeredClues}
+              handleLoadQuestion={handleLoadQuestion}
+              key={"clue" + clue.id}
+            />
+          )}
+        </ul>
+      </div>
     </div>
   )
 }

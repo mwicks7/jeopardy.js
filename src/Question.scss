@@ -1,0 +1,44 @@
+.question {
+  @include vertical-align;
+  flex-direction: column;
+  flex: 1 1 auto;
+  padding: 15px;
+  text-transform: uppercase;
+  color: #ffffff;
+  text-shadow: 2px 2px 3px #000000;
+  text-transform: uppercase;
+  font-size: 24px;
+  text-align: center;
+}
+
+  .question__text {
+    margin-bottom: 45px;
+  }
+
+  .question__form {
+    width: 70%;
+  }
+
+    .question__input,
+    .question__submit {
+      display: block;
+      padding: 10px;
+      width: 100%;
+      text-align: center;
+      font-size: 16px;
+      border: 0;
+      margin-bottom: 4px;
+      box-shadow: 0 2 5px #000000;
+      border-radius: 3px;
+    }
+
+    .question__submit {
+      background: $yellow;
+      cursor: pointer;
+    }
+    
+    .question__submit--skip {
+      background: transparent;
+      color: #ffffff;
+      box-shadow: none;
+    }
