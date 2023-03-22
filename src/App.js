@@ -44,12 +44,12 @@ class App extends React.Component {
     const maxCategoryID = 28000
     const categoryOffset = Math.random() * (maxCategoryID - 1) + 1
 
-    fetch(`http://jservice.io/api/categories?count=1&offset=${categoryOffset}`, {
+    fetch(`https://jservice.io/api/categories?count=1&offset=${categoryOffset}`, {
       method: 'GET'
     })
     .then(response => response.json())
     .then(categories => {
-      fetch(`http://jservice.io/api/category?id=${categories[0].id}`, {
+      fetch(`https://jservice.io/api/category?id=${categories[0].id}`, {
         method: 'GET'
       })
       .then(response => response.json())
