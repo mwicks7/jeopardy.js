@@ -1,6 +1,6 @@
 # JEOPARDY!js
 
-I'm not Alex Trebeck but THIS IS JEOPARDY.js. Test your trivia skills with actual clues from 38 seasons of the show. 
+I'm not Alex Trebek but "THIS IS JEOPARDY.js." Test your trivia skills with actual clues from 38 seasons of the show. 
 
 Big thanks to https://jservice.io/ for providing the API endpoints.
 
