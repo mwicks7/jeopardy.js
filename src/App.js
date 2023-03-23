@@ -164,7 +164,7 @@ class App extends React.Component {
     const { error, isLoaded, category, clues, answeredClues, activeClue, displayMessage, score } = this.state
 
     if (error) {
-      return <div>Error: {error.message}</div>
+      return <div>An error occurred: {error.message}. Please refresh your browser to play.</div>
     } else {
       return (
         <div className="app">
