@@ -1,12 +1,13 @@
 .app {
   width: 525px;
+  max-width: 100%;
   margin: 0 auto;
 }
 
   .app__header {
     background-color: $blue;
     padding: 25px;
-    border: $border;
+    border-bottom: $border;
   }
 
     .app__logo {

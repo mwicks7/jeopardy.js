@@ -1,7 +1,7 @@
 $blue: #2521c6;
 $blue-dark: #1f1ca6;
 $yellow: #f0c888;
-$border: 2px solid #ffffff;
+$border: 4px solid #ffffff;
 
 * {
   box-sizing: border-box;
@@ -25,6 +25,14 @@ body {
   align-items: center;
   justify-content: center;
 }
+
+
+@mixin breakpoint {
+  @media (min-width: #{525px}) {
+    @content;
+  }
+}
+
 
 @import-normalize;
 @import "./App.scss";
