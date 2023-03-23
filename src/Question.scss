@@ -6,7 +6,6 @@
   text-transform: uppercase;
   color: #ffffff;
   text-shadow: 2px 2px 3px #000000;
-  text-transform: uppercase;
   font-size: 24px;
   text-align: center;
 }
@@ -15,23 +14,27 @@
     margin-bottom: 45px;
   }
 
-  .question__form {
-    width: 70%;
+  .question__form {}
+  
+  .question__answer {
+    margin-bottom: 15px;
   }
 
     .question__input,
-    .question__submit {
+    .question__submit,
+    .question__keep-playing {
       display: block;
       padding: 10px;
-      width: 100%;
+      width: 225px;
       text-align: center;
       font-size: 16px;
       border: 0;
-      margin-bottom: 4px;
       box-shadow: 0 2 5px #000000;
       border-radius: 3px;
+      margin: 0 auto 4px;
     }
-
+    
+    .question__keep-playing,
     .question__submit {
       background: $yellow;
       cursor: pointer;

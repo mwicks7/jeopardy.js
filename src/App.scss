@@ -2,3 +2,21 @@
   width: 525px;
   margin: 0 auto;
 }
+
+  .app__header {
+    background-color: $blue;
+    padding: 25px;
+    border: $border;
+  }
+
+    .app__logo {
+      display: block;
+      width: 385px;
+      max-width: 100%;
+      margin: 0 auto;
+    }
+    
+  .app__footer {
+    text-align: center;
+    
+  }

@@ -1,5 +1,5 @@
 import './styles.scss'
-import logo from './images/jeopardy_logo.png'
+import logo from './images/logo.png'
 import React from 'react';
 import Clues from './Clues'
 import Scoreboard from './Scoreboard'
@@ -162,41 +162,40 @@ class App extends React.Component {
 
   render() {
     const { error, isLoaded, category, clues, answeredClues, activeClue, displayMessage, score } = this.state
-    
-    this.state.clues.map(clue => {
-      console.log(clue.answer)
-    })
 
     if (error) {
       return <div>Error: {error.message}</div>
-    } else if (!isLoaded) {
-      return <div>Loading...</div>
     } else {
       return (
         <div className="app">
-          <header className="header">
-            <img className="header__logo" src={logo} alt="Jeopardy!js" />
+          <header className="app__header">
+            <img className="app__logo" src={logo} alt="Jeopardy!js" />
           </header>
           <main>
             <div className="gameboard">
-              <Clues 
-                category={category} 
-                clues={clues} 
-                answeredClues={answeredClues} 
-                handleLoadQuestion={this.handleLoadQuestion}   
-              />
-              <Question 
-                activeClue={activeClue} 
-                displayMessage={displayMessage}  
-                handleAnswerQuestion={this.handleAnswerQuestion} 
-                handleSkipQuestion={this.handleSkipQuestion}
-                handleKeepPlaying={this.handleKeepPlaying} 
-              />
+              {!isLoaded && <div className="gameboard__loader">Loading...</div>}
+              {isLoaded && 
+                <Clues 
+                  category={category} 
+                  clues={clues} 
+                  answeredClues={answeredClues} 
+                  handleLoadQuestion={this.handleLoadQuestion}   
+                />
+              }
+              {isLoaded &&
+                <Question 
+                  activeClue={activeClue} 
+                  displayMessage={displayMessage}  
+                  handleAnswerQuestion={this.handleAnswerQuestion} 
+                  handleSkipQuestion={this.handleSkipQuestion}
+                  handleKeepPlaying={this.handleKeepPlaying} 
+                />
+              }
             </div>
             <Scoreboard score={score} />
           </main>
-          <footer>
-
+          <footer className='app__footer'>
+              <p>This app was built by <a href="https://mwicks7.github.io/resume" target="_blank">Matthew Wicks</a>, and is not affiliated with the show.</p>
           </footer>
         </div>
       );

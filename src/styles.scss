@@ -7,6 +7,15 @@ $border: 2px solid #ffffff;
   box-sizing: border-box;
 }
 
+a, a:visited {
+  color: $blue;
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
 body {
   margin: 0;
 }
@@ -19,7 +28,6 @@ body {
 
 @import-normalize;
 @import "./App.scss";
-@import "./Header.scss";
 @import "./Gameboard.scss";
 @import "./Clues.scss";
 @import "./Question.scss";
