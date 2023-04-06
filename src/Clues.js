@@ -16,7 +16,6 @@ const Clue = ({ clue, answeredClues, handleLoadQuestion }) => {
       >
         ${clue.points}
       </button>
-      <div className="clues__question-text">{clue.question}</div>
     </li>
   )
 }

@@ -23,10 +23,6 @@
       @include vertical-align;
     }
 
-    .clues__question:last-of-type {
-      border-bottom: 0;
-    }
-    
     .clues__category-title {
       padding: 10px;
       text-shadow: 2px 2px 3px #000000;
@@ -38,6 +34,11 @@
       margin: 0;
       padding: 0;
     }
+
+      .clues__question:last-of-type {
+        border-bottom: 0;
+      }
+    
 
       .clues__question-value {
         background: $blue;
@@ -57,18 +58,5 @@
 
         &.is--answered {
           visibility: hidden;
-        }
-      }
-
-      .clues__question-text {
-        @include vertical-align;
-        display: none;
-        position: absolute;
-        height: 100%;
-        width: 100%;
-        font-size: 50px;
-        background: blue;
-        
-        &.is--open {
         }
       }
