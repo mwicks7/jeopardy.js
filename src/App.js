@@ -82,7 +82,8 @@ class App extends React.Component {
   }
 
   sanatizeAnswer(answer) {
-    return answer.replace('\\', '').replace('\<i\>', '').replace('\</i\>', '')
+    // Data from api sometimes included undesirable characters
+    return answer.replace('\\', '').replace('<i>', '').replace('</i>', '')
   }
 
   handleError(error) {
@@ -195,7 +196,7 @@ class App extends React.Component {
             <Scoreboard score={score} />
           </main>
           <footer className='app__footer'>
-              <p>This app was built by <a href="https://mwicks7.github.io/resume" target="_blank">Matthew Wicks</a>, and is not affiliated with the show.</p>
+              <p>This app was built by <a href="https://mwicks7.github.io/resume" target="_blank" rel="noreferrer">Matthew Wicks</a>, and is not affiliated with the show.</p>
           </footer>
         </div>
       );
