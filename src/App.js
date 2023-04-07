@@ -56,7 +56,7 @@ class App extends React.Component {
       .then(category => {
         let categoryData = { 
           id: categories[0].id,
-          title: categories[0].title ,
+          title: categories[0].title
         }
         let cluesData = []
 
@@ -64,11 +64,15 @@ class App extends React.Component {
           cluesData.push({
             id: category.clues[j].id,
             question: category.clues[j].question,
-            answer: this.sanatizeAnswer(category.clues[j].answer),
-            points: category.clues[j].value === null ? j + 1 * 100 : category.clues[j].value,
+            answer: this.sanatizeClueAnswer(category.clues[j].answer),
+            points: this.sanatizePoints(category.clues[j].value, j),
             asked: false
           })
         }
+
+        cluesData.sort((a, b) => {
+          return a.points > b.points ? 1 : -1
+        })
         
         this.setState((state) => {
           return {
@@ -81,8 +85,15 @@ class App extends React.Component {
     }, (error) => this.handleError(error))
   }
 
-  sanatizeAnswer(answer) {
-    // Data from api sometimes included undesirable characters
+  sanatizePoints(points, j) {
+    // Data from api sometimes returns null or values that are not multiples of 100
+    let sanatizedPoints = points === null ? j + 1 * 100 : points
+    sanatizedPoints = Math.round(sanatizedPoints / 100) * 100
+    return sanatizedPoints
+  }
+
+  sanatizeClueAnswer(answer) {
+    // Data from api sometimes includes undesirable characters
     return answer.replace('\\', '').replace('<i>', '').replace('</i>', '')
   }
 
@@ -109,9 +120,10 @@ class App extends React.Component {
     })
   }
 
-  determineCorrectness(userAnswer, clueAnswer) {
+  stripAnswer(answer) {
     // To Do: Allow for more leniancy instead of exact match
-    return userAnswer === clueAnswer
+    // Remove the,a,an,',",.,-,spaces,(,)
+    return answer
   }
 
   handleAnswerQuestion(e) {
@@ -119,7 +131,7 @@ class App extends React.Component {
     const clueAnswer = this.state.activeClue.answer.toLowerCase()
     const clueID = Number(this.state.activeClue.id)
     const cluePoints = Number(this.state.activeClue.points)
-    const isCorrect = this.determineCorrectness(userAnswer, clueAnswer)
+    const isCorrect = this.stripAnswer(userAnswer) === this.stripAnswer(clueAnswer)
     const score = isCorrect ?
       this.state.score + cluePoints :
       this.state.score - cluePoints 
