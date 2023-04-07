@@ -1,9 +1,10 @@
 import './styles.scss'
 import logo from './images/logo.png'
-import React from 'react';
+import React from 'react'
 import Clues from './Clues'
 import Scoreboard from './Scoreboard'
 import Question from './Question'
+import backupData from './backupData'
 
 const defaultState = {
   error: null,
@@ -99,9 +100,13 @@ class App extends React.Component {
   }
 
   handleError(error) {
+    const index = Math.random() * (backupData.length - 1) + 1
+    const errorBackup = backupData[index]
+
     this.setState({
       isLoaded: true,
-      error
+      category: errorBackup.category,
+      clues: errorBackup.clues
     });
   }
 
