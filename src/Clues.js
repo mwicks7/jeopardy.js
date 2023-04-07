@@ -20,7 +20,7 @@ const Clue = ({ clue, answeredClues, handleLoadQuestion }) => {
   )
 }
 
-const Clues = ({ category, clues, answeredClues, handleLoadQuestion }) => {
+const Clues = ({ category, answeredClues, handleLoadQuestion }) => {
   return (
     <div className="clues">
       <div className="clues__category">
@@ -28,7 +28,7 @@ const Clues = ({ category, clues, answeredClues, handleLoadQuestion }) => {
           {category.title}
         </div>
         <ul className="clues__questions">
-          {clues.map((clue, i) => 
+          {category.clues.map((clue, i) => 
             <Clue 
               clue={clue}
               answeredClues={answeredClues}

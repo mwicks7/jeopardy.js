@@ -10,7 +10,6 @@ const defaultState = {
   error: null,
   isLoaded: false,
   category: '',
-  clues: [],
   activeClue: {
     id: '',
     question: '',
@@ -59,7 +58,6 @@ class App extends React.Component {
         question: category.clues[i].question,
         answer: this.sanatizeClueAnswer(category.clues[i].answer),
         points: this.sanatizePoints(category.clues[i].value, i),
-        asked: false
       })
     }
 
@@ -72,9 +70,9 @@ class App extends React.Component {
         isLoaded: true,
         category: { 
           id: category.id,
-          title: category.title
-        },
-        clues
+          title: category.title,
+          clues
+        }
       }
     });
   }
@@ -90,6 +88,11 @@ class App extends React.Component {
     // Data from api sometimes includes undesirable characters
     const regex = /\\|<i>|<\/i>|(|)/g
     return answer.replace(regex, '')
+  }
+
+  stripAnswer(answer) {
+    const regex1 = /the |a |an |and |_|\W/gi
+    return answer.replace(regex1, '')
   }
 
   handleError() {
@@ -119,11 +122,6 @@ class App extends React.Component {
     })
   }
 
-  stripAnswer(answer) {
-    const regex1 = /the |a |an |and |_|\W/gi
-    return answer.replace(regex1, '')
-  }
-
   handleAnswerQuestion(e) {
     const userAnswer = document.getElementById('answerInput').value.toLowerCase()
     const clueAnswer = this.state.activeClue.answer.toLowerCase()
@@ -141,7 +139,7 @@ class App extends React.Component {
         displayMessage: {
           answer: true,
           correct: isCorrect,
-          keepPlaying: state.clues.length === answeredClues
+          keepPlaying: state.category.clues.length === answeredClues.length
         },
         score: score
       }
@@ -158,7 +156,7 @@ class App extends React.Component {
         displayMessage: {
           answer: true,
           correct: false,
-          keepPlaying: state.clues.length === answeredClues.length
+          keepPlaying: state.category.clues.length === answeredClues.length
         },
       }
     })
@@ -172,7 +170,7 @@ class App extends React.Component {
   }
 
   render() {
-    const { error, isLoaded, category, clues, answeredClues, activeClue, displayMessage, score } = this.state
+    const { error, isLoaded, category, answeredClues, activeClue, displayMessage, score } = this.state
 
     if (error) {
       return <div>An error occurred: {error.message}. Please refresh your browser to play.</div>
@@ -188,7 +186,6 @@ class App extends React.Component {
               {isLoaded && 
                 <Clues 
                   category={category} 
-                  clues={clues} 
                   answeredClues={answeredClues} 
                   handleLoadQuestion={this.handleLoadQuestion}   
                 />
