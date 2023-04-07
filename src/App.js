@@ -35,10 +35,10 @@ class App extends React.Component {
   }
 
   componentDidMount() {
-    this.fetchClues()
+    this.fetchCategory()
   }
   
-  async fetchClues() {
+  async fetchCategory() {
     const controller = new AbortController()
     const categoryCount = 28000
     const categoryId = Math.random() * (categoryCount - 1) + 1
@@ -50,20 +50,6 @@ class App extends React.Component {
     }
 
     const category = await response.json()
-    let clues = []
-
-    for (let i=0; i < 5 && i < category.clues.length; i++) {
-      clues.push({
-        id: category.clues[i].id,
-        question: category.clues[i].question,
-        answer: this.sanatizeClueAnswer(category.clues[i].answer),
-        points: this.sanatizePoints(category.clues[i].value, i),
-      })
-    }
-
-    clues.sort((a, b) => {
-      return a.points > b.points ? 1 : -1
-    })
     
     this.setState((state) => {
       return {
@@ -71,22 +57,42 @@ class App extends React.Component {
         category: { 
           id: category.id,
           title: category.title,
-          clues
+          clues: this.sanatizeClues(category.clues)
         }
       }
     });
   }
 
+  sanatizeClues(clues) {
+    let cleanClues = []
+
+    for (let i=0; i < 5 && i < clues.length; i++) {
+      cleanClues.push({
+        id: clues[i].id,
+        question: clues[i].question,
+        answer: this.sanatizeClueAnswer(clues[i].answer),
+        points: this.sanatizePoints(clues[i].value, i),
+      })
+    }
+
+    cleanClues.sort((a, b) => {
+      return a.points > b.points ? 1 : -1
+    })
+    
+    return cleanClues
+  }
+
   sanatizePoints(points, i) {
-    // Data from api sometimes returns null or values that are not multiples of 100
-    let sanatizedPoints = points === null ? i + 1 * 100 : points
-    sanatizedPoints = Math.round(sanatizedPoints / 100) * 100
-    return sanatizedPoints
+    // Ensure points are not null
+    let cleanPoints = points === null ? i + 1 * 100 : points
+    // Ensure points are multiples of 100
+    cleanPoints = Math.round(cleanPoints / 100) * 100
+    return cleanPoints
   }
 
   sanatizeClueAnswer(answer) {
-    // Data from api sometimes includes undesirable characters
-    const regex = /\\|<i>|<\/i>|(|)/g
+    // Remove undesirable characters from answer
+    const regex = /\\|<i>|<\/i>|\(|\)/g
     return answer.replace(regex, '')
   }
 
@@ -97,12 +103,10 @@ class App extends React.Component {
 
   handleError() {
     const index = Math.random() * (backupData.length - 1) + 1
-    const errorBackup = backupData[index]
 
     this.setState({
       isLoaded: true,
-      category: errorBackup.category,
-      clues: errorBackup.clues
+      category: backupData[index]
     });
   }
 
@@ -166,7 +170,7 @@ class App extends React.Component {
     const resetState = defaultState
     resetState.score = this.state.score 
     this.setState(resetState)
-    this.fetchClues()
+    this.fetchCategory()
   }
 
   render() {
