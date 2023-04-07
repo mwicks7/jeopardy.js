@@ -1,7 +1,7 @@
 import './styles.scss'
 import logo from './images/logo.png'
 import React from 'react'
-import Clues from './Clues'
+import Category from './Category'
 import Scoreboard from './Scoreboard'
 import Question from './Question'
 import backupData from './backupData'
@@ -184,7 +184,7 @@ class App extends React.Component {
             <div className="gameboard">
               {!isLoaded && <div className="gameboard__loader">Loading...</div>}
               {isLoaded && 
-                <Clues 
+                <Category 
                   category={category} 
                   answeredClues={answeredClues} 
                   handleLoadQuestion={this.handleLoadQuestion}   
