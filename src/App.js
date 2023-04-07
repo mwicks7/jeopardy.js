@@ -28,12 +28,10 @@ const defaultState = {
 class App extends React.Component {
   constructor (props) {
     super(props);
-
     this.handleLoadQuestion = this.handleLoadQuestion.bind(this)
     this.handleAnswerQuestion = this.handleAnswerQuestion.bind(this)
     this.handleSkipQuestion = this.handleSkipQuestion.bind(this)
     this.handleKeepPlaying = this.handleKeepPlaying.bind(this)
-
     this.state = defaultState
   }
 
@@ -41,54 +39,49 @@ class App extends React.Component {
     this.fetchClues()
   }
   
-  fetchClues() {
-    const maxCategoryID = 28000
-    const categoryOffset = Math.random() * (maxCategoryID - 1) + 1
+  async fetchClues() {
+    const controller = new AbortController()
+    const categoryCount = 28000
+    const categoryId = Math.random() * (categoryCount - 1) + 1
+    const response = await fetch(`https://jservice.io/api/category?id=${categoryId}`, { method: 'GET' })
 
-    fetch(`https://jservice.io/api/categories?count=1&offset=${categoryOffset}`, {
-      method: 'GET'
-    })
-    .then(response => response.json())
-    .then(categories => {
-      fetch(`https://jservice.io/api/category?id=${categories[0].id}`, {
-        method: 'GET'
+    if (!response.ok) {
+      this.handleError()
+      controller.abort()
+    }
+
+    const category = await response.json()
+    let clues = []
+
+    for (let i=0; i < 5 && i < category.clues.length; i++) {
+      clues.push({
+        id: category.clues[i].id,
+        question: category.clues[i].question,
+        answer: this.sanatizeClueAnswer(category.clues[i].answer),
+        points: this.sanatizePoints(category.clues[i].value, i),
+        asked: false
       })
-      .then(response => response.json())
-      .then(category => {
-        let categoryData = { 
-          id: categories[0].id,
-          title: categories[0].title
-        }
-        let cluesData = []
+    }
 
-        for (let j=0; j < 5 && j < category.clues.length; j++) {
-          cluesData.push({
-            id: category.clues[j].id,
-            question: category.clues[j].question,
-            answer: this.sanatizeClueAnswer(category.clues[j].answer),
-            points: this.sanatizePoints(category.clues[j].value, j),
-            asked: false
-          })
-        }
-
-        cluesData.sort((a, b) => {
-          return a.points > b.points ? 1 : -1
-        })
-        
-        this.setState((state) => {
-          return {
-            isLoaded: true,
-            category: categoryData,
-            clues: cluesData
-          }
-        });
-      }, (error) => this.handleError(error))
-    }, (error) => this.handleError(error))
+    clues.sort((a, b) => {
+      return a.points > b.points ? 1 : -1
+    })
+    
+    this.setState((state) => {
+      return {
+        isLoaded: true,
+        category: { 
+          id: category.id,
+          title: category.title
+        },
+        clues
+      }
+    });
   }
 
-  sanatizePoints(points, j) {
+  sanatizePoints(points, i) {
     // Data from api sometimes returns null or values that are not multiples of 100
-    let sanatizedPoints = points === null ? j + 1 * 100 : points
+    let sanatizedPoints = points === null ? i + 1 * 100 : points
     sanatizedPoints = Math.round(sanatizedPoints / 100) * 100
     return sanatizedPoints
   }
@@ -99,7 +92,7 @@ class App extends React.Component {
     return answer.replace(regex, '')
   }
 
-  handleError(error) {
+  handleError() {
     const index = Math.random() * (backupData.length - 1) + 1
     const errorBackup = backupData[index]
 
