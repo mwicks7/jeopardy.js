@@ -94,7 +94,8 @@ class App extends React.Component {
 
   sanatizeClueAnswer(answer) {
     // Data from api sometimes includes undesirable characters
-    return answer.replace('\\', '').replace('<i>', '').replace('</i>', '')
+    const regex = /\\|<i>|<\/i>|(|)/g
+    return answer.replace(regex, '')
   }
 
   handleError(error) {
@@ -121,9 +122,8 @@ class App extends React.Component {
   }
 
   stripAnswer(answer) {
-    // To Do: Allow for more leniancy instead of exact match
-    // Remove the,a,an,',",.,-,spaces,(,)
-    return answer
+    const regex1 = /the |a |an |and |_|\W/gi
+    return answer.replace(regex1, '')
   }
 
   handleAnswerQuestion(e) {
