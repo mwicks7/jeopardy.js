@@ -14,8 +14,8 @@ const Answer = ({ displayMessage, answer, handleKeepPlaying }) => {
   return (
     <div className="question__result">
       <div className="question__correct">
-        {displayMessage.correct && 'CORRECT!'}
-        {!displayMessage.correct && 'INCORRECT!'}
+        {displayMessage.correct === true && 'CORRECT!'}
+        {displayMessage.correct === false && 'INCORRECT!'}
       </div>
       <div className="question__answer">
         The answer is: {answer}
