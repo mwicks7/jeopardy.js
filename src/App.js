@@ -204,6 +204,7 @@ class App extends React.Component {
         </main>
         <footer className='app__footer'>
             <p>This app was built by <a href="https://mwicks7.github.io/resume" target="_blank" rel="noreferrer">Matthew Wicks</a>, and is not affiliated with the show.</p>
+            <p>Big thanks to <a href="https://jservice.io/" target="_blank" rel="noreferrer">jservice.io</a> for providing the API endpoint.</p>
         </footer>
       </div>
     );
