@@ -78,13 +78,17 @@ class App extends React.Component {
   
   sanatizeClues(clues) {
     let cleanClues = []
+    
+    clues.sort((a, b) => {
+      return a.id > b.id ? 1 : -1
+    })
 
     for (let i=0; i < 5 && i < clues.length; i++) {
       cleanClues.push({
         id: clues[i].id,
         question: clues[i].question,
         answer: this.sanatizeAnswer(clues[i].answer),
-        points: this.sanatizePoints(clues[i].value, i),
+        points: this.sanatizePoints(clues[i].value, i)
       })
     }
 
@@ -101,7 +105,7 @@ class App extends React.Component {
   }
 
   sanatizePoints(points, i) {
-    let cleanPoints = points === null ? i + 1 * 100 : points
+    let cleanPoints = points === null ? (i + 1) * 100 : points
     cleanPoints = Math.round(cleanPoints / 100) * 100
     return cleanPoints
   }
