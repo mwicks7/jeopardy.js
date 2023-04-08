@@ -159,7 +159,7 @@ class App extends React.Component {
         answeredClues: answeredClues,
         displayMessage: {
           answer: true,
-          correct: false,
+          correct: null,
           keepPlaying: state.category.clues.length === answeredClues.length
         },
       }
