@@ -37,8 +37,9 @@
     
         .category__clue-value {
           background: $blue;
+          display: block;
           color: $yellow;
-          font-size: 48px;
+          font-size: 38px;
           font-weight: bold;
           height: 100%;
           width: 100%;
@@ -46,6 +47,10 @@
           text-shadow: 4px 4px 2px #000000;
           cursor: pointer;
           
+          @include breakpoint {
+            font-size: 48px;
+          }
+
           &:hover,
           &:focus {
             background: $blue-dark;
