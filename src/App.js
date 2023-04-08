@@ -4,8 +4,8 @@ import React from 'react'
 import Category from './Category'
 import Scoreboard from './Scoreboard'
 import Question from './Question'
-import backupData from './backupData'
 
+const errorData = require('./backupData.js')
 const defaultState = {
   error: null,
   isLoaded: false,
@@ -38,19 +38,20 @@ class App extends React.Component {
     this.fetchCategory()
   }
   
+  getRandomId(max) {
+    return Math.floor(Math.random() * (max - 1) + 1)
+  }
   async fetchCategory() {
-    const controller = new AbortController()
-    const categoryCount = 28000
-    const categoryId = Math.random() * (categoryCount - 1) + 1
+    const categoryId = this.getRandomId(2800)
     const response = await fetch(`https://jservice.io/api/category?id=${categoryId}`, { method: 'GET' })
 
     if (!response.ok) {
       this.handleError()
-      controller.abort()
+      return
     }
 
     const category = await response.json()
-    
+
     this.setState((state) => {
       return {
         isLoaded: true,
@@ -102,11 +103,10 @@ class App extends React.Component {
   }
 
   handleError() {
-    const index = Math.random() * (backupData.length - 1) + 1
-
+    const index = this.getRandomId(errorData.backupData.length)
     this.setState({
       isLoaded: true,
-      category: backupData[index]
+      category: errorData.backupData[index]
     });
   }
 
@@ -174,44 +174,39 @@ class App extends React.Component {
   }
 
   render() {
-    const { error, isLoaded, category, answeredClues, activeClue, displayMessage, score } = this.state
-
-    if (error) {
-      return <div>An error occurred: {error.message}. Please refresh your browser to play.</div>
-    } else {
-      return (
-        <div className="app">
-          <header className="app__header">
-            <img className="app__logo" src={logo} alt="Jeopardy!js" />
-          </header>
-          <main>
-            <div className="gameboard">
-              {!isLoaded && <div className="gameboard__loader">Loading...</div>}
-              {isLoaded && 
-                <Category 
-                  category={category} 
-                  answeredClues={answeredClues} 
-                  handleLoadQuestion={this.handleLoadQuestion}   
-                />
-              }
-              {isLoaded &&
-                <Question 
-                  activeClue={activeClue} 
-                  displayMessage={displayMessage}  
-                  handleAnswerQuestion={this.handleAnswerQuestion} 
-                  handleSkipQuestion={this.handleSkipQuestion}
-                  handleKeepPlaying={this.handleKeepPlaying} 
-                />
-              }
-            </div>
-            <Scoreboard score={score} />
-          </main>
-          <footer className='app__footer'>
-              <p>This app was built by <a href="https://mwicks7.github.io/resume" target="_blank" rel="noreferrer">Matthew Wicks</a>, and is not affiliated with the show.</p>
-          </footer>
-        </div>
-      );
-    }
+    const { isLoaded, category, answeredClues, activeClue, displayMessage, score } = this.state
+    return (
+      <div className="app">
+        <header className="app__header">
+          <img className="app__logo" src={logo} alt="Jeopardy!js" />
+        </header>
+        <main>
+          <div className="gameboard">
+            {!isLoaded && <div className="gameboard__loader">Loading...</div>}
+            {isLoaded && 
+              <Category 
+                category={category} 
+                answeredClues={answeredClues} 
+                handleLoadQuestion={this.handleLoadQuestion}   
+              />
+            }
+            {isLoaded &&
+              <Question 
+                activeClue={activeClue} 
+                displayMessage={displayMessage}  
+                handleAnswerQuestion={this.handleAnswerQuestion} 
+                handleSkipQuestion={this.handleSkipQuestion}
+                handleKeepPlaying={this.handleKeepPlaying} 
+              />
+            }
+          </div>
+          <Scoreboard score={score} />
+        </main>
+        <footer className='app__footer'>
+            <p>This app was built by <a href="https://mwicks7.github.io/resume" target="_blank" rel="noreferrer">Matthew Wicks</a>, and is not affiliated with the show.</p>
+        </footer>
+      </div>
+    );
   }
 }
 
