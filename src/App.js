@@ -111,7 +111,7 @@ class App extends React.Component {
   }
 
   stripAnswer(answer) {
-    const regex1 = /the |a |an |and |_|\W/gi
+    const regex1 = /the |a |an |and |_|\W|s$/gi
     return answer.toLowerCase().replace(regex1, '')
   }
 
