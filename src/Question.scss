@@ -1,7 +1,5 @@
 .question {
-  @include vertical-align;
-  flex-direction: column;
-  flex: 1 1 100%;
+  flex: 1;
   padding: 15px;
   text-transform: uppercase;
   color: #ffffff;

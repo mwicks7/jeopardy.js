@@ -3,10 +3,10 @@
   color: #ffffff;
   text-align: center;
   font-weight: bold;
-  flex: 0 0 135px;
+  width: 135px;
 
   @include breakpoint {
-    flex: 0 0 175px;
+    width: 175px;
   }
 }
 
