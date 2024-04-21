@@ -1,11 +1,16 @@
 .app {
-  width: 768px;
-  max-width: 100%;
+  background: $blue;
+  width: 100%;
+  max-width: 768px;
   margin: 0 auto;
+
+  @include breakpoint {
+    border: $border;
+    border-radius: 16px;
+  }
 }
 
 .app__header {
-  background-color: $blue;
   padding: 25px;
   border-bottom: $border;
 }

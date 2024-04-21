@@ -1,24 +1,9 @@
 $blue: #2521c6;
 $blue-dark: #1f1ca6;
+$white: #ffffff;
 $yellow: #f0c888;
 $border: 4px solid #ffffff;
-
-* {
-  box-sizing: border-box;
-}
-
-a, a:visited {
-  color: $blue;
-  text-decoration: none;
-}
-
-a:hover {
-  text-decoration: underline;
-}
-
-body {
-  margin: 0;
-}
+$shadow: 2px 2px 3px #000000;
 
 @mixin vertical-align {
   display: flex;
@@ -26,13 +11,33 @@ body {
   justify-content: center;
 }
 
-
 @mixin breakpoint {
   @media (min-width: #{525px}) {
     @content;
   }
 }
 
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  background: $blue;
+  @include breakpoint {
+    padding: 16px;
+  }
+}
+
+a,
+a:visited {
+  color: $blue;
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
 
 @import-normalize;
 @import "./App.scss";
