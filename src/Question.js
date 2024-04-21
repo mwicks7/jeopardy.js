@@ -2,7 +2,7 @@ import React from "react";
 
 const AnswerForm = ({ handleAnswerQuestion, handleSkipQuestion }) => {
   return (
-    <div className="question__form">
+    <form className="question__form" onSubmit={(e) => handleAnswerQuestion()}>
       <input
         type="text"
         placeholder="What is..."
@@ -10,16 +10,17 @@ const AnswerForm = ({ handleAnswerQuestion, handleSkipQuestion }) => {
         id="answerInput"
         className="question__input"
       />
-      <button onClick={handleAnswerQuestion} className="question__submit">
+      <button className="question__submit" type="submit">
         Submit Response
       </button>
       <button
         onClick={handleSkipQuestion}
+        type="button"
         className="question__submit question__submit--skip"
       >
         Skip
       </button>
-    </div>
+    </form>
   );
 };
 
