@@ -1,5 +1,8 @@
 .question {
   flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
   padding: 15px;
   text-transform: uppercase;
   color: #ffffff;
@@ -8,7 +11,17 @@
   text-align: center;
 }
 
-.question__text {
+.question__spacer,
+.question__clue,
+.question__form,
+.question__result {
+  flex: 1 1 33.33%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.question__clue {
   margin-bottom: 45px;
 }
 
@@ -19,8 +32,9 @@
   gap: 0.5rem;
 }
 
-.question__answer {
-  margin-bottom: 15px;
+.question__result {
+  flex-direction: column;
+  gap: 10px;
 }
 
 .question__input,

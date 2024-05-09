@@ -1,4 +1,4 @@
-import React from "react";
+import React from "react"
 
 const AnswerForm = ({ handleAnswerQuestion, handleSkipQuestion }) => {
   return (
@@ -21,15 +21,15 @@ const AnswerForm = ({ handleAnswerQuestion, handleSkipQuestion }) => {
         Skip
       </button>
     </form>
-  );
-};
+  )
+}
 
 const Answer = ({ displayMessage, answer, handleKeepPlaying }) => {
   return (
     <div className="question__result">
       <div className="question__correct">
         {displayMessage.correct === true && "CORRECT!"}
-        {displayMessage.correct === false && "INCORRECT!"}
+        {displayMessage.correct === false && "INCORRECT!"}{" "}
       </div>
       <div className="question__answer">What is {answer}?</div>
       {displayMessage.keepPlaying && (
@@ -38,8 +38,8 @@ const Answer = ({ displayMessage, answer, handleKeepPlaying }) => {
         </button>
       )}
     </div>
-  );
-};
+  )
+}
 
 const Question = ({
   activeClue,
@@ -51,7 +51,8 @@ const Question = ({
   if (activeClue.question) {
     return (
       <div className="question">
-        <div className="question__text">{activeClue.question}</div>
+        <div className="question__spacer" />
+        <div className="question__clue">{activeClue.question}</div>
         {!displayMessage.answer && (
           <AnswerForm
             handleAnswerQuestion={handleAnswerQuestion}
@@ -66,10 +67,10 @@ const Question = ({
           />
         )}
       </div>
-    );
+    )
   } else {
-    return <div className="question">Select a clue</div>;
+    return <div className="question">Select a clue</div>
   }
-};
+}
 
-export default Question;
+export default Question
