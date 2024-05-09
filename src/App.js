@@ -117,7 +117,7 @@ class App extends React.Component {
     return cleanPoints
   }
 
-  stripAnswer(answer) {
+  trimAnswer(answer) {
     const regex1 = /the |a |an |and |_|\W|s$/gi
     return answer.toLowerCase().replace(regex1, "")
   }
@@ -145,7 +145,7 @@ class App extends React.Component {
     const clueAnswer = this.state.activeClue.answer
     const cluePoints = this.state.activeClue.points
     const isCorrect =
-      this.stripAnswer(userAnswer) === this.stripAnswer(clueAnswer)
+      this.trimAnswer(userAnswer) === this.trimAnswer(clueAnswer)
     const newScore = isCorrect
       ? this.state.score + cluePoints
       : this.state.score - cluePoints
